@@ -8,7 +8,7 @@ def get_coordinates(city_name):
     response = requests.get(url)
     data = response.json()
     if response.status_code != 200:
-        st.error("Geocoding API not working.")
+        print("Geocoding API not working.")
         return None
     return data[0]["name"]
 
@@ -18,7 +18,7 @@ def fetch_sunset_time(city_name):
     response = requests.get(url)
     data = response.json()
     if response.status_code != 200:
-        st.error("Sunset time was not fetched. Please enter valid city name.")
+        print("Sunset time was not fetched. Please enter valid city name.")
         return None
     sys_data = data["sys"].get("sunset")
     timezone_data = data.get("timezone",0)
