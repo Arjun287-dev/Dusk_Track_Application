@@ -3,7 +3,7 @@ import streamlit as st
 from datetime import datetime,timezone,timedelta
 
 def get_coordinates(city_name):
-    API_KEY = "API_KEY"
+    API_KEY = "4957901b5453a46183958e9be751a3d4"
     url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={API_KEY}"
     response = requests.get(url)
     data = response.json()
@@ -13,7 +13,7 @@ def get_coordinates(city_name):
     return data[0]["name"]
 
 def fetch_sunset_time(city_name):
-    API_KEY = "API_KEY"
+    API_KEY = "4957901b5453a46183958e9be751a3d4"
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_KEY}"
     response = requests.get(url)
     data = response.json()
@@ -33,16 +33,19 @@ st.title("Sunset Time")
 city = st.text_input("Enter the City Name")
 
 if st.button("Get Sunset Time"):
-    if city:
+    try:
         city_name = get_coordinates(city)
-        if city_name:
+        try:
             sunset_time,timezone_data = fetch_sunset_time(city_name)
-            if sunset_time:
+            try:
                 formatted_time = utc_to_local_time(sunset_time,timezone_data)
                 st.subheader(f"The Sunset Time in {city_name} : {formatted_time}")
-            else:
+            except:
                 st.error("Couldn't fetch the sunset time")
-        else:
+        except:
             st.error("Invalid city name")
-    else:
+    except:
         st.error("Please enter valid city name")
+
+
+        
